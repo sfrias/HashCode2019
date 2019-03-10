@@ -16,6 +16,11 @@ Original file is located at
 # 
 #
 
+"""## Previous config and functions section
+
+### Imports and configs
+"""
+
 # Import and package configuration
 from google.colab import files
 import matplotlib.pyplot as pyplot
@@ -23,21 +28,25 @@ from pylab import *
 import networkx
 import time
 
+from itertools import combinations
+
+"""### Download files from Hashcode instance"""
+
 # Download data files from hashcode
 
-!wget -O example.in  "https://hashcodejudge.withgoogle.com/download/blob/AMIfv97QHzUItY7To0o6id8E6_kxpE1KwTlPR1T9yC2zlbm46xvPPX7tBn1r5ZNxw9XboxHkVKa82BzM-B65uM92pJRONqfeVlHfpzH8xbqKc9FrAWJnd3Yp5SF7naqscxmnBjTa3R-UcB_bqg5hoAa0TZFXIlvi-RL6y_daJXyNUUHeP1kBxQss_1b2nNbNFg7W3Jtgyl2Vs86QrufNrQcUlNh754HyhRrhV3yJBo66HdYQAa2lPISjoUkUTpWqqrGIEItpPu27GNqcp2I69D8j8A-70B30oU-w7zIe9DJ9xnpC70T6T88"
+#!wget -O example.in  "https://hashcodejudge.withgoogle.com/download/blob/AMIfv97QHzUItY7To0o6id8E6_kxpE1KwTlPR1T9yC2zlbm46xvPPX7tBn1r5ZNxw9XboxHkVKa82BzM-B65uM92pJRONqfeVlHfpzH8xbqKc9FrAWJnd3Yp5SF7naqscxmnBjTa3R-UcB_bqg5hoAa0TZFXIlvi-RL6y_daJXyNUUHeP1kBxQss_1b2nNbNFg7W3Jtgyl2Vs86QrufNrQcUlNh754HyhRrhV3yJBo66HdYQAa2lPISjoUkUTpWqqrGIEItpPu27GNqcp2I69D8j8A-70B30oU-w7zIe9DJ9xnpC70T6T88"
 
-!wget -O lovely.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv977kmeJsFQfgJNbIlAkviRDMVQcDWj0hLBMvhyg8SuPR52vtGV8uIJsB5nnPDX1Rp14OqzXWF-XXUKp3hhFjdL9PtHAOemuN-rKrd_OgY8pQ6SwgBlBcwPm-5Ova9XoGHSlhT2iLskxOoetjmTNQ8upzsFVkCQqh0gM0P-VX2nWmyxSfIFGmv373rdp9k1Bw9iMdhZXxuMfYIPaWJ8c6izWNYsl9Mpk1a7R0DjShNoDn6Nbfghj_S9bkjGgJS6Clz0b3rMqhHyHAxuIVMnfw1ppwWK_z5TYb4Tsz1vzNERAVPtnuSw"
+#!wget -O lovely.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv977kmeJsFQfgJNbIlAkviRDMVQcDWj0hLBMvhyg8SuPR52vtGV8uIJsB5nnPDX1Rp14OqzXWF-XXUKp3hhFjdL9PtHAOemuN-rKrd_OgY8pQ6SwgBlBcwPm-5Ova9XoGHSlhT2iLskxOoetjmTNQ8upzsFVkCQqh0gM0P-VX2nWmyxSfIFGmv373rdp9k1Bw9iMdhZXxuMfYIPaWJ8c6izWNYsl9Mpk1a7R0DjShNoDn6Nbfghj_S9bkjGgJS6Clz0b3rMqhHyHAxuIVMnfw1ppwWK_z5TYb4Tsz1vzNERAVPtnuSw"
 
-!wget -O memoments.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv94hwk1wpXjU-qRaszhHtsN4gJSGTkGGNfiItXwzXwhtP6IGrdiZrJ16XvlGFZAKOck8csLoiqwaDiJY6pybACZPZoBnwUMB_WLmQPR7XwH_0AMzk4at1sNgwB_f-9wOwSaqAQE8VtIlLNLDOLeo9sJDLxUVceOopaGh93MDCof4KCYXcdvM9tCSQz1sT89KVmM3Qx0Rz0JkXm4-a3mTk_676DubwwI5siY-ulC87_p1qcfeWdJXmuqMO7E-8THazayXZmS2dXyeTWiOOt27fOC06dSTe9mYfNBISojtloNJc-9Xohc"
+#!wget -O memoments.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv94hwk1wpXjU-qRaszhHtsN4gJSGTkGGNfiItXwzXwhtP6IGrdiZrJ16XvlGFZAKOck8csLoiqwaDiJY6pybACZPZoBnwUMB_WLmQPR7XwH_0AMzk4at1sNgwB_f-9wOwSaqAQE8VtIlLNLDOLeo9sJDLxUVceOopaGh93MDCof4KCYXcdvM9tCSQz1sT89KVmM3Qx0Rz0JkXm4-a3mTk_676DubwwI5siY-ulC87_p1qcfeWdJXmuqMO7E-8THazayXZmS2dXyeTWiOOt27fOC06dSTe9mYfNBISojtloNJc-9Xohc"
 
-!wget -O petpict.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv95TypJhkPij61j5cS87pz5lYAw7u6lKSxctMX0zPI_8N7y-bRcwGLHe8rx8vAaQ_Dszh0yuWjpdXucxsC52Fq-iuNeI9D8ugsj3djcsDH5Ax3TlTILi27GOCPv_-U7KZsyrbKusR5T8saKHiE2cferYs92JBV_nKxm7gxQkzITercTAfcJaEtenWiTS4rhPkIVARXCQE9LaycZvxV4IqTnDCfYHZhtFVV9_Y_h5riDVjGZZd01tplZ1aibiKASlJZulxOwnJGfmgrYkImN3dCaDYx0eAGlGUoRjAF3GsiGdZ4bI0_V-lKZJlSdoMPxCctPLpgvL"
+#!wget -O petpict.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv95TypJhkPij61j5cS87pz5lYAw7u6lKSxctMX0zPI_8N7y-bRcwGLHe8rx8vAaQ_Dszh0yuWjpdXucxsC52Fq-iuNeI9D8ugsj3djcsDH5Ax3TlTILi27GOCPv_-U7KZsyrbKusR5T8saKHiE2cferYs92JBV_nKxm7gxQkzITercTAfcJaEtenWiTS4rhPkIVARXCQE9LaycZvxV4IqTnDCfYHZhtFVV9_Y_h5riDVjGZZd01tplZ1aibiKASlJZulxOwnJGfmgrYkImN3dCaDYx0eAGlGUoRjAF3GsiGdZ4bI0_V-lKZJlSdoMPxCctPLpgvL"
 
-!wget -O shinyself.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv941-URwsmc_UpuUvypgEBaH_U4oDiPKJZR_gk2oNcK8NXMmcZMwFC8qM3aYM_G1dN5hhRt9ONNq_o1RLVdWXqFn6M_DFVf_UnLD0E7Qg-D989lrG08e5FWD06_crrlGQI48euVgJSyEHO2oo8_3506xyzI2KsMLs_zPfjnnRr6sVKSMeQLNWRD4gut2m1QBzkRWvZuigNbXsCFra7wNPrEdPCI4Mf11W9rWcMrVsvMcrAmjw02vPbqqe8QrVwM08n0tMfAvk01BwBEM8RcwkYtkp8IUP3M0_67Sum1zfuFayeLWSOY"
+#!wget -O shinyself.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv941-URwsmc_UpuUvypgEBaH_U4oDiPKJZR_gk2oNcK8NXMmcZMwFC8qM3aYM_G1dN5hhRt9ONNq_o1RLVdWXqFn6M_DFVf_UnLD0E7Qg-D989lrG08e5FWD06_crrlGQI48euVgJSyEHO2oo8_3506xyzI2KsMLs_zPfjnnRr6sVKSMeQLNWRD4gut2m1QBzkRWvZuigNbXsCFra7wNPrEdPCI4Mf11W9rWcMrVsvMcrAmjw02vPbqqe8QrVwM08n0tMfAvk01BwBEM8RcwkYtkp8IUP3M0_67Sum1zfuFayeLWSOY"
 
-!ls -l
+#!ls -l
 
-!cat example.in
+"""### Create Data Structures and load data from file"""
 
 # Load data file function. Parameters: nom = name of input file, test = 'Test debug mode False or True'
 def loaddata(nom,test):
@@ -47,13 +56,16 @@ def loaddata(nom,test):
   nphotos = int(line.rstrip())
   nv = 0 # number of vertical images
   nh = 0 # Number of horizontal images
+  phpt = 0 # photo pointer position to videos list for each tag
+  ttags = 0 # Tag global number occurrences 
   nctags = set() # Not linkable tags
   ncphotos = set() # Not linkable photos
   dtags = {} # tags occurrence, dictionary
-  ttags = 0 # Tag global number occurrences
+  dtag_ph = {} # Tag dictionary pointer to tag_ph photos list for each tag
   photos = [] # Data for all photos
-  photosv= [] # Data for vertical photos
-  photosh=[] # Data for horizontal photos
+  photosv = [] # Data for vertical photos
+  photosh = [] # Data for horizontal photos
+  tag_ph = [] # photos list for each tag, indexed
   # Read all image descriptions
   for i in range(nphotos):
     lista = []
@@ -63,8 +75,13 @@ def loaddata(nom,test):
     for t in tags: # Adds tag occurrences to dictionary
       if t in dtags:
         dtags[t] += 1
+        tag_ph[dtag_ph[t]].append(i)
       else:
         dtags[t] = 1
+        dtag_ph[t] = phpt
+        tag_ph.append([])
+        tag_ph[phpt].append(i)
+        phpt += 1
     ntags = int(lista[2]) # Convert to int  tag number for photo
     lista = lista[:2] # Crop list
     # Count number of vertical or horizontal images
@@ -82,10 +99,12 @@ def loaddata(nom,test):
     if test:
       print(photos[i])
   file.close()
-  print('N. fotos:',nphotos,'Fotos Verticales:',nv,'Fotos Horiz:',nh,'Tags no combinables horizontales:',len(nctags),'Apariciones Tags:',ttags,'Tags diferentes:',len(dtags),'Media Tags por imagen:', ttags/len(dtags))
-  return nphotos, photos, photosv, photosh, nv, nh, nctags, ncphotos, ttags, dtags
+  print('N. fotos:',nphotos,'Fotos Verticales:',nv,'Fotos Horiz:',nh,'Tags no combinables horizontales:',len(nctags),'Apariciones Tags:',ttags,'Tags diferentes:',len(dtags),'Media Tags/ imagen:', ttags/len(dtags))
+  return nphotos, photos, photosv, photosh, nv, nh, nctags, ncphotos, ttags, dtags, dtag_ph, tag_ph
 
-def listafotos(photos, limit):
+"""### Display utilities for analysis"""
+
+def listalista(photos, limit=15):
   # Lista de fotos enlazables
   num = len(photos)
   fila = 0
@@ -94,7 +113,7 @@ def listafotos(photos, limit):
     num -= 1
     fila += 1
     if fila >= limit:
-      print('Fotos pendientes de listar:', num)
+      print('Elementos pendientes de listar:', num)
       break
 
 def listatags(tags, limit, nrow = 18):
@@ -115,6 +134,79 @@ def listatags(tags, limit, nrow = 18):
       print('Tags pendientes de listar:', num)
       break
 
+def listupla(dicc, limit=500, nrow = 18, valor = 0):
+  # Lista tags
+  num = len(dicc)
+  listed = 0
+  columna = 0
+  for tupla in dicc:
+    if dicc[tupla] >= valor:
+      print(tupla,':',dicc[tupla],'\t', end='')
+    num -= 1
+    listed += 1
+    columna += 1
+    if columna >= nrow:
+      print()
+      columna = 0
+    if listed >= limit:
+      print()
+      print('Tags pendientes de listar:', num)
+      break
+
+def photos4tag(dtag_ph, tag_ph, limit=10, nrow = 6):
+  num = len(dtag_ph)
+  listed = 0
+  columna = 0
+  for t in dtag_ph:
+    ptlist = dtag_ph[t]
+    print(t,'\t[', ptlist, ']->',tag_ph[ptlist],'\t',end='')
+    #print('\t\tCombinaciones:',list(combinations(tag_ph[ptlist],2)))
+    num -= 1
+    listed += 1
+    columna += 1
+    if columna >= nrow:
+      print()
+      columna = 0
+    if listed >= limit:
+      print()
+      print('Tags pendientes de listar:', num)
+      break
+
+def link2photos(photos, id1,dtag_ph,tag_ph,test=False):
+  if test:
+    print(photos[id1])
+  idset = set()
+  idset.add(id1)
+  dnphotos = {}
+  tags_id1 = photos[id1][3]
+  if test:
+    print()
+  for t in tags_id1:
+    ptlist = dtag_ph[t]
+    if test:
+      print(t,'\t',ptlist,'\t', end='')
+      print(tag_ph[ptlist],'\t',end='')
+      print('\tCombinaciones:',end='')
+    cphotos = set() # photos set combinations
+    for c in list(combinations(tag_ph[ptlist],2)):
+      cphotos.add(c[0])
+      cphotos.add(c[1])
+      cphotos = cphotos - idset
+      if test:
+        print(cphotos,end='')
+      cpop =cphotos.pop()
+      if cpop in dnphotos:
+        dnphotos[cpop] += 1
+      else:
+        dnphotos[cpop] = 1
+    if test:
+      print()
+  if test:
+    print(dnphotos)
+  return dnphotos
+
+"""### Functions to optimize process"""
+
 def purgedict(dtags,nctags, test):
   tuplas = list(dtags.items())
   j = 0
@@ -125,6 +217,7 @@ def purgedict(dtags,nctags, test):
         print ('----->Tag:', i, 'no combinable...eliminando de dtags y añadiendo a nctags')
       nctags.add(tuplas[j][0]) # Add at not linkable tags set
       del(dtags[tuplas[j][0]]) # remove tuple from dictionary for number of occurrences to this tag
+      del(dtag_ph[tuplas[j][0]]) # remove tuple from dictionary pointer to list of photos where appear this tag
     j+= 1
   tuplas = []
   print('N. fotos:',nphotos,'Fotos Verticales:',nv,'Fotos Horiz:',nh,'Tags no combinables horizontales:',len(nctags),'Apariciones Tags:',ttags,'Tags diferentes:',len(dtags),'Media Tags por imagen:', ttags/len(dtags))
@@ -188,42 +281,70 @@ def link(photos, test ):
         print('Candidatos', photos[pos_candidato1],'+', photos[pos_candidato2], 'Inters:', inter, 'Ntags:', ninter)
     ptpic += 1
 
-nphotos, photos, photosv, photosh, nv, nh, nctags, ncphotos, ttags, dtags = loaddata('lovely.in',False)
+"""## Process Data Section before select upshot to problem"""
 
-#dtags.items()
+# Load data from file, Create Data Structures
+nphotos, photos, photosv, photosh, nv, nh, nctags, ncphotos, ttags, dtags, dtag_ph, tag_ph = loaddata('lovely.in',False)
 
-#len(dtags)
+# Indexed photos list for each tag where appears
+photos4tag(dtag_ph,tag_ph,20,1)
 
+# List number of ocurrences for each tag on all photos
+listupla(dtags,50,15)
+
+# Purge tags to nctags set and delete to associated dictionaries
 dtags, nctags = purgedict(dtags, nctags, False)
 
-#dtags.items()
+# List set of tuples as number of ocurrences for each tag in photos list after purging
+listupla(dtags,50,17)
 
-#len(dtags)
+# List photos associated to a tag, after purging not linkable tags.
+photos4tag(dtag_ph,tag_ph,20,1)
 
-#len(nctags)
+# List set of not linkable tags
+listatags(nctags,100,18)
 
-# Listar tags no combinables
-listatags(nctags,50)
+"""### Option only vertical photos"""
 
-listafotos(photosv,5)
+#listafotos(photosv,5)
 
-photosv, nctags, ttags = purgetags(photosv,nctags,False)
+#photosv, nctags, ttags = purgetags(photosv,nctags,False)
 
-listafotos(photosv,5)
+#listafotos(photosv,5)
 
-listafotos(photosh,5)
+"""### Option only horizontal photos"""
 
-photosh, nctags, ttags = purgetags(photosh,nctags,False)
+#listafotos(photosh,5)
 
-listafotos(photosh,5)
+#photosh, nctags, ttags = purgetags(photosh,nctags,False)
 
-listafotos(photos,5)
+#listafotos(photosh,5)
+
+"""### Option all photos"""
+
+listalista(photos,5)
 
 photos, nctags, ttags = purgetags(photos,nctags,False)
 
-listafotos(photos,5)
+listalista(photos,5)
 
+# Remove not linkable tags after Data Structures were processed
 nctags = set()
+listatags(nctags,100,18)
+
+photos4tag(dtag_ph,tag_ph,20,1)
+
+link2photos(photos,0, dtag_ph, tag_ph), len
+
+link2photos(photos,6674, dtag_ph, tag_ph)
+
+link2photos(photos,5162, dtag_ph, tag_ph)
+
+listupla(link2photos(photos,21043, dtag_ph, tag_ph))
+
+link2photos(photos,35978, dtag_ph, tag_ph)
+
+link2photos(photos,784, dtag_ph, tag_ph)
 
 # purgephotos(photos, nctags, 6,False)
 
