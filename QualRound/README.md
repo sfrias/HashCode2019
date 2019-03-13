@@ -15,10 +15,12 @@ Also the problem is NP-complete. Number of combinations of posible slides  in sl
 
 Now, we start with a look for data: some aditional auxiliary functions were created:
 
- - Load Data:
+ - Load Data, returns:
   * *photos*: make a list with photo Id (integer:0-(N-1), Orientation: {'H','V'}, set of string tags.
-  * *dtags*: make a dictionarY with tags occurrences for each tags, for all photos.
+  * *dtags*: make a dictionary with tags occurrences for each tags, for all photos.
   * *tag_ph*: make a photos list that contain a tag, for each tag(linkable), indexed by *dtag_ph*.
   * *dtag_ph*: make a dictionary  pointer to *tag_ph* photos list, for each tag included in *photos* list.
+  * Generic parameters: *nphotos* number of photos, *nv* number of vertical photos, *nh* number of horizontal photos,
+    *nctags* default set() not connected tags, *ncphotos* default set() not connected photos, *ttags* Tag global number
+    occurrences.
 
-  
