@@ -1,6 +1,6 @@
 Python code for HashCode 2019 QualRound problem:
 
-- Make a slideshow that links slides. One slide can include an horizontal photo, or two vertical photos.
+- Make a slideshow that links slides. One slide can include an horizontal photo, or two vertical photos. Transitions must be some tags in common between two slides.
 
 - Photos has tags to link slides when were common with both:
   * If horizontal photo is included as slide, tags are contributed from photo.
