@@ -22,12 +22,13 @@ Original file is located at
 """
 
 # Import and package configuration
-from google.colab import files
-import matplotlib.pyplot as pyplot
-from pylab import *
-import networkx
-import time
+#import matplotlib.pyplot as pyplot
+#from pylab import *
+#import networkx
+#import time
 
+# Import and package configuration
+from google.colab import files
 from itertools import combinations
 
 """### Download files from Hashcode instance"""
@@ -36,7 +37,7 @@ from itertools import combinations
 
 #!wget -O example.in  "https://hashcodejudge.withgoogle.com/download/blob/AMIfv97QHzUItY7To0o6id8E6_kxpE1KwTlPR1T9yC2zlbm46xvPPX7tBn1r5ZNxw9XboxHkVKa82BzM-B65uM92pJRONqfeVlHfpzH8xbqKc9FrAWJnd3Yp5SF7naqscxmnBjTa3R-UcB_bqg5hoAa0TZFXIlvi-RL6y_daJXyNUUHeP1kBxQss_1b2nNbNFg7W3Jtgyl2Vs86QrufNrQcUlNh754HyhRrhV3yJBo66HdYQAa2lPISjoUkUTpWqqrGIEItpPu27GNqcp2I69D8j8A-70B30oU-w7zIe9DJ9xnpC70T6T88"
 
-#!wget -O lovely.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv977kmeJsFQfgJNbIlAkviRDMVQcDWj0hLBMvhyg8SuPR52vtGV8uIJsB5nnPDX1Rp14OqzXWF-XXUKp3hhFjdL9PtHAOemuN-rKrd_OgY8pQ6SwgBlBcwPm-5Ova9XoGHSlhT2iLskxOoetjmTNQ8upzsFVkCQqh0gM0P-VX2nWmyxSfIFGmv373rdp9k1Bw9iMdhZXxuMfYIPaWJ8c6izWNYsl9Mpk1a7R0DjShNoDn6Nbfghj_S9bkjGgJS6Clz0b3rMqhHyHAxuIVMnfw1ppwWK_z5TYb4Tsz1vzNERAVPtnuSw"
+!wget -O lovely.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv977kmeJsFQfgJNbIlAkviRDMVQcDWj0hLBMvhyg8SuPR52vtGV8uIJsB5nnPDX1Rp14OqzXWF-XXUKp3hhFjdL9PtHAOemuN-rKrd_OgY8pQ6SwgBlBcwPm-5Ova9XoGHSlhT2iLskxOoetjmTNQ8upzsFVkCQqh0gM0P-VX2nWmyxSfIFGmv373rdp9k1Bw9iMdhZXxuMfYIPaWJ8c6izWNYsl9Mpk1a7R0DjShNoDn6Nbfghj_S9bkjGgJS6Clz0b3rMqhHyHAxuIVMnfw1ppwWK_z5TYb4Tsz1vzNERAVPtnuSw"
 
 #!wget -O memoments.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv94hwk1wpXjU-qRaszhHtsN4gJSGTkGGNfiItXwzXwhtP6IGrdiZrJ16XvlGFZAKOck8csLoiqwaDiJY6pybACZPZoBnwUMB_WLmQPR7XwH_0AMzk4at1sNgwB_f-9wOwSaqAQE8VtIlLNLDOLeo9sJDLxUVceOopaGh93MDCof4KCYXcdvM9tCSQz1sT89KVmM3Qx0Rz0JkXm4-a3mTk_676DubwwI5siY-ulC87_p1qcfeWdJXmuqMO7E-8THazayXZmS2dXyeTWiOOt27fOC06dSTe9mYfNBISojtloNJc-9Xohc"
 
@@ -44,16 +45,30 @@ from itertools import combinations
 
 #!wget -O shinyself.in "https://hashcodejudge.withgoogle.com/download/blob/AMIfv941-URwsmc_UpuUvypgEBaH_U4oDiPKJZR_gk2oNcK8NXMmcZMwFC8qM3aYM_G1dN5hhRt9ONNq_o1RLVdWXqFn6M_DFVf_UnLD0E7Qg-D989lrG08e5FWD06_crrlGQI48euVgJSyEHO2oo8_3506xyzI2KsMLs_zPfjnnRr6sVKSMeQLNWRD4gut2m1QBzkRWvZuigNbXsCFra7wNPrEdPCI4Mf11W9rWcMrVsvMcrAmjw02vPbqqe8QrVwM08n0tMfAvk01BwBEM8RcwkYtkp8IUP3M0_67Sum1zfuFayeLWSOY"
 
-#!ls -l
+!ls -l
 
-"""### Create Data Structures and load data from file"""
+"""### Create Data Structures and load data from/to file, scoring"""
 
 # Load data file function. Parameters: nom = name of input file, test = 'Test debug mode False or True'
+# # def loaddata(nom,test):return
+# nphotos	# Number of photos
+# ,photos	# Data for all photos
+# ,photosv# Data for vertical photos
+# ,photosh# Data for horizontal photos
+# ,nv	# number of vertical images
+# ,nh	# Number of horizontal images
+# ,nctags	# Not linkable tags
+# ,ncphotos# Not linkable photos
+# ttags	# Tag global number occurrences
+# dtags	# tags occurrence, dictionary
+# dtag_ph# Tag dictionary pointer to tag_ph photos list for each tag
+# tag_ph	# photos list for each tag, indexed
+
 def loaddata(nom,test):
   file = open(nom,'r')
   line = file.readline()
   # Assign number of photos from first line
-  nphotos = int(line.rstrip())
+  nphotos = int(line.rstrip()) # Number of photos
   nv = 0 # number of vertical images
   nh = 0 # Number of horizontal images
   phpt = 0 # photo pointer position to videos list for each tag
@@ -102,10 +117,57 @@ def loaddata(nom,test):
   print('N. fotos:',nphotos,'Fotos Verticales:',nv,'Fotos Horiz:',nh,'Tags no combinables horizontales:',len(nctags),'Apariciones Tags:',ttags,'Tags diferentes:',len(dtags),'Media Tags/ imagen:', ttags/len(dtags))
   return nphotos, photos, photosv, photosh, nv, nh, nctags, ncphotos, ttags, dtags, dtag_ph, tag_ph
 
+# Write Output data to a file, and download via google.colab files, drive or other
+def writedata(nom,slideshow):
+  file=open(nom,'w')
+  file.write(str(len(slideshow))+'\n')
+  for i in slideshow:
+    if i == 2:
+      file.write(' '.join(str(e) for e in i)+'\n')
+    else:
+      file.write(str(i)+'\n')
+  file.close()
+  files.download(nom) # google colab files download
+  return
+
+def scoring(photos, ph1_1,ph2_1,ph1_2 = -1, ph2_2 = -1, test = False):
+  
+  # Set tags for slide1 with id photos
+  if ph1_2 == -1 :
+    tag1 = photos[ph1_1][3]
+  else:
+    tag1 = photos[ph1_1][3] | photos[ph1_2][3]
+  if test:
+    print('Tags fotos', ph1_1,' ', ph1_2, 'de slide 1', tag1)
+  # Set tags for slide2 whith id photos
+  if ph2_2 == -1:
+    tag2 = photos[ph2_1][3]
+  else:
+    tag2 = photos[ph2_1][3] | photos[ph2_2][3]
+  if test:
+    print('Tags fotos', ph2_1,' ', ph2_2, 'de slide 2', tag2)
+  # Calculate optional scoring
+  sctag_int = tag1 & tag2
+  sctag1not2 = tag1 - tag2
+  sctag2not1 = tag2 - tag1
+  sc_int = len(sctag_int)
+  sc1not2 = len(sctag1not2)
+  sc2not1 = len(sctag2not1)
+  score = min(sc_int, sc1not2, sc2not1)
+  if test:
+    print('Interseccion: Num.tags:', sc_int)
+    print(sctag_int)
+    print('En slide1 pero no en slide2. Num.tags:', sc1not2)
+    print(sctag1not2)
+    print('En slide2 pero no en slide1. Num.tags:', sc2not1)
+    print(sctag2not1)
+  return score
+
 """### Display utilities for analysis"""
 
-def listalista(photos, limit=15):
-  # Lista de fotos enlazables
+# Listing function 
+def lista(photos, limit = 15):
+  # Linkable photos list
   num = len(photos)
   fila = 0
   for foto in photos:
@@ -113,10 +175,14 @@ def listalista(photos, limit=15):
     num -= 1
     fila += 1
     if fila >= limit:
-      print('Elementos pendientes de listar:', num)
+      print(num, 'Elements pending to list')
       break
 
-def listatags(tags, limit, nrow = 18):
+# Listing set of tags function
+# tags # set of elements
+# limit # max. number  of lines listed
+# nrow # max number of elements at each row
+def listags(tags, limit = 50, nrow = 18):
   # Lista tags
   num = len(tags)
   listed = 0
@@ -142,12 +208,12 @@ def listupla(dicc, limit=500, nrow = 18, valor = 0):
   for tupla in dicc:
     if dicc[tupla] >= valor:
       print(tupla,':',dicc[tupla],'\t', end='')
-    num -= 1
-    listed += 1
-    columna += 1
-    if columna >= nrow:
-      print()
-      columna = 0
+      num -= 1
+      listed += 1
+      columna += 1
+      if columna >= nrow:
+        print()
+        columna = 0
     if listed >= limit:
       print()
       print('Tags pendientes de listar:', num)
@@ -238,7 +304,7 @@ def purgetags(photos, nctags, test):
   print('N. fotos:',len(photos),'Apariciones Tags:',ttags,'Tags diferentes:',len(dtags),'Media Tags por imagen:', ttags/len(dtags))
   return photos, nctags,ttags
 
-# Purge for photos that can't be linked,
+# Purge for photos that can't be linked
 def purgephotos(photos, nctags, rango, test):
     cont = 0
     print('Fotos que son menos combinables.',rango,' tags combinables') 
@@ -259,7 +325,7 @@ def purgephotos(photos, nctags, rango, test):
         #  print('-',end='')
     print(cont, 'menos combinables')
 
-# Find the best option to combine two horizontal slides
+# Find the best option to combine two horizontal slides. NOT USED NOW
 def link(photos, test ):
   pos_candidato1 = 0
   pos_candidato2 = 0
@@ -281,13 +347,22 @@ def link(photos, test ):
         print('Candidatos', photos[pos_candidato1],'+', photos[pos_candidato2], 'Inters:', inter, 'Ntags:', ninter)
     ptpic += 1
 
-"""## Process Data Section before select upshot to problem"""
+"""## Process Data Section before select upshot to problem
+
+### Load data.
+"""
 
 # Load data from file, Create Data Structures
 nphotos, photos, photosv, photosh, nv, nh, nctags, ncphotos, ttags, dtags, dtag_ph, tag_ph = loaddata('lovely.in',False)
 
+lista(photos,5)
+
+print(scoring(photos, 0,6674, test=True))
+
+"""### Remove unlinkable tags on dictionary"""
+
 # Indexed photos list for each tag where appears
-photos4tag(dtag_ph,tag_ph,20,1)
+photos4tag(dtag_ph,tag_ph,10,1)
 
 # List number of ocurrences for each tag on all photos
 listupla(dtags,50,15)
@@ -299,52 +374,84 @@ dtags, nctags = purgedict(dtags, nctags, False)
 listupla(dtags,50,17)
 
 # List photos associated to a tag, after purging not linkable tags.
-photos4tag(dtag_ph,tag_ph,20,1)
+photos4tag(dtag_ph,tag_ph,10,1)
 
 # List set of not linkable tags
-listatags(nctags,100,18)
+listags(nctags,100,18)
 
-"""### Option only vertical photos"""
+"""### ### Remove unlinkable tags on video lists"""
 
-#listafotos(photosv,5)
-
-#photosv, nctags, ttags = purgetags(photosv,nctags,False)
-
-#listafotos(photosv,5)
-
-"""### Option only horizontal photos"""
-
-#listafotos(photosh,5)
-
-#photosh, nctags, ttags = purgetags(photosh,nctags,False)
-
-#listafotos(photosh,5)
-
-"""### Option all photos"""
-
-listalista(photos,5)
+lista(photos,5)
 
 photos, nctags, ttags = purgetags(photos,nctags,False)
 
-listalista(photos,5)
+lista(photos,5)
 
 # Remove not linkable tags after Data Structures were processed
 nctags = set()
-listatags(nctags,100,18)
 
-photos4tag(dtag_ph,tag_ph,20,1)
+"""### Other"""
 
-link2photos(photos,0, dtag_ph, tag_ph), len
+photos4tag(dtag_ph,tag_ph,8,1)
+
+link2photos(photos,0, dtag_ph, tag_ph),
 
 link2photos(photos,6674, dtag_ph, tag_ph)
 
-link2photos(photos,5162, dtag_ph, tag_ph)
+link2photos(photos,13708, dtag_ph, tag_ph)
 
-listupla(link2photos(photos,21043, dtag_ph, tag_ph))
+listupla(link2photos(photos,14519, dtag_ph, tag_ph))
 
-link2photos(photos,35978, dtag_ph, tag_ph)
+link2photos(photos,18143, dtag_ph, tag_ph)
 
-link2photos(photos,784, dtag_ph, tag_ph)
+link2photos(photos,74267, dtag_ph, tag_ph)
+
+link2photos(photos,78134, dtag_ph, tag_ph)
+
+idphotos = set()
+for i in range(len(photos)):
+  idphotos.add(i)
+
+listags(idphotos,200,38)
+
+slideshow =[]
+idphoto = 41000
+idphotos.remove(41000)
+slideshow.append(idphoto)
+slideshow
+
+#linkphoto = link2photos(photos,idphoto, dtag_ph, tag_ph)
+#listupla(linkphoto)
+
+while True:
+  linkphoto = link2photos(photos,idphoto, dtag_ph, tag_ph)
+#  listupla(linkphoto)
+  for i in linkphoto:
+    #print(i,'\t',end='')
+    j = len(linkphoto)
+    if i in idphotos:
+      # print('Nueva:',i)
+      slideshow.append(i)
+      idphotos.remove(i)
+      idphoto = i
+      break
+    else:
+      #print('Coincidente')
+      j -= 1
+      continue
+    if j == 0:
+      #print('Sin combinaciones')
+      break
+  if len(idphotos) == 0:
+    break
+
+writedata('lovely.out',slideshow)
+
+len(slideshow)
+
+ls
+
+
 
 # purgephotos(photos, nctags, 6,False)
 
