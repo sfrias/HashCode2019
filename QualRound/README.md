@@ -28,3 +28,5 @@ Now, we start with a look for data: some aditional auxiliary functions were crea
 
 First approach is set a seed slide, and link options from/to this slide, alias Slide_L, Slide_R, and store this with scoring:
 - First optimization was to make a matrix to set associations with tags and photo id's. Only calculate one time presence of tag on photo, or what photos have one specific tag. For lovely landscapes: 80.000 photos dataset, and a 840.000 different tags, we would be around 68 GB of memory words. So much.
+- Second option is to work with dictionaries and sets, to optimize processing, and not overload memory.
+![alt text](https://github.com/sfrias/HashCode2019/blob/master/QualRound/loaddata.jpg)
