@@ -26,4 +26,5 @@ Now, we start with a look for data: some aditional auxiliary functions were crea
     *nctags* default set() not connected tags, *ncphotos* default set() not connected photos, *ttags* Tag global number
     occurrences.
 
-First approach is set a seed slide, and link options from/to this slide, alias Slide_L, Slide_R, and store this with scoring.
+First approach is set a seed slide, and link options from/to this slide, alias Slide_L, Slide_R, and store this with scoring:
+- First optimization was to make a matrix to set associations with tags and photo id's. Only calculate one time presence of tag on photo, or what photos have one specific tag. For lovely landscapes: 80.000 photos dataset, and a 840.000 different tags, we would be around 68 GB of memory words. So much.
